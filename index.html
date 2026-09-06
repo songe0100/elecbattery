@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d8b73" />
+  <title>대전도시과학고 전기배터리과 가로세로 낱말퀴즈</title>
+  <style>
+    :root { --ink:#173b4a; --muted:#66808a; --mint:#dff8ef; --teal:#0d8b73; --teal-dark:#086653; --yellow:#ffd35a; --orange:#ff8d55; --red:#e96757; --green:#17a673; --paper:#fffef8; --shadow:0 16px 38px rgba(20,82,77,.13); }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); font-family:ui-rounded,"Noto Sans KR",system-ui,-apple-system,sans-serif; background:linear-gradient(145deg,#e8fbf5 0%,#fff9df 52%,#e5f5ff 100%); min-height:100vh; }
+    button,input { font:inherit; }
+    .app { width:min(100%,720px); margin:auto; padding:18px 15px 32px; }
+    .hero { position:relative; overflow:hidden; color:white; border-radius:28px; padding:24px 22px 22px; background:linear-gradient(135deg,#087d6b,#15a27b); box-shadow:var(--shadow); }
+    .hero:after { content:"⚡"; position:absolute; right:20px; top:5px; font-size:78px; opacity:.18; transform:rotate(10deg); }
+    .brand { display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.18); font-weight:800; font-size:12px; }
+    h1 { margin:15px 0 10px; font-size:clamp(27px,8vw,46px); line-height:1.12; letter-spacing:-.07em; }
+    .intro { margin:0; font-size:14px; line-height:1.65; font-weight:700; color:#ecfff8; }
+    .status { display:flex; justify-content:space-between; align-items:center; gap:10px; margin:13px 2px 0; font-size:13px; font-weight:800; }
+    .progress { height:9px; margin-top:7px; overflow:hidden; border-radius:99px; background:rgba(255,255,255,.28); }
+    .progress span { display:block; width:0; height:100%; border-radius:99px; background:var(--yellow); transition:width .35s ease; }
+    .card { margin-top:16px; padding:18px; border-radius:24px; background:rgba(255,255,255,.88); box-shadow:var(--shadow); }
+    .card-title { display:flex; align-items:center; gap:8px; margin:0 0 13px; font-size:17px; }
+    .card-title span { display:grid; place-items:center; width:29px; height:29px; border-radius:10px; background:var(--yellow); }
+    .board-wrap { display:flex; justify-content:center; padding:3px 0 5px; }
+    .board { display:grid; grid-template-columns:repeat(8, minmax(30px, 45px)); grid-template-rows:repeat(8, minmax(30px, 45px)); gap:4px; }
+    .cell { position:relative; display:grid; place-items:center; border:2px solid #acd7cb; border-radius:8px; background:#f9fffc; color:var(--ink); font-size:clamp(18px,6vw,28px); font-weight:900; cursor:pointer; user-select:none; transition:.18s; }
+    .cell.blank { border:0; background:transparent; cursor:default; }
+    .cell.active { border-color:var(--orange); background:#fff3ce; transform:scale(1.05); z-index:1; }
+    .cell.correct { border-color:#5dc79b; background:#dff9eb; }
+    .cell.wrong { border-color:#f29b76; background:#fff0e8; }
+    .num { position:absolute; top:1px; left:3px; font-size:9px; line-height:1; color:var(--teal-dark); }
+    .helper { margin:10px 0 0; text-align:center; color:var(--muted); font-size:12px; font-weight:700; }
+    .entry { display:flex; gap:8px; align-items:center; margin-top:14px; }
+    .entry label { flex:1; min-width:0; color:var(--teal-dark); font-size:13px; font-weight:900; }
+    #answerInput { width:100%; min-width:0; padding:12px 13px; border:2px solid #cce8df; border-radius:14px; outline:0; color:var(--ink); background:#fbfffd; font-weight:800; }
+    #answerInput:focus { border-color:var(--teal); box-shadow:0 0 0 4px rgba(13,139,115,.11); }
+    .clues { display:grid; gap:10px; }
+    .clue-group h3 { margin:4px 0 7px; color:var(--teal-dark); font-size:14px; }
+    .clue { width:100%; display:flex; align-items:flex-start; gap:9px; text-align:left; padding:11px 12px; border:1px solid #d6eee7; border-radius:15px; background:#fbfffd; color:var(--ink); cursor:pointer; }
+    .clue:hover,.clue.selected { border-color:var(--orange); background:#fff9e9; }
+    .clue.done { border-color:#8bd8b7; background:#ebfff5; }
+    .clue.bad { border-color:#f4b09a; background:#fff1eb; }
+    .clue-num { flex:0 0 25px; display:grid; place-items:center; height:25px; border-radius:8px; color:white; background:var(--teal); font-weight:900; font-size:13px; }
+    .clue-text { font-size:13px; line-height:1.4; font-weight:750; }
+    .feedback { min-height:24px; margin:12px 2px 0; text-align:center; color:var(--teal-dark); font-size:14px; font-weight:900; }
+    .actions { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:9px; }
+    .actions button { padding:13px 10px; border:0; border-radius:15px; font-weight:900; cursor:pointer; }
+    #checkBtn { color:white; background:linear-gradient(135deg,#ff9b54,#ff755d); box-shadow:0 7px 14px rgba(255,117,93,.22); }
+    #resetBtn { color:var(--teal-dark); background:#e5f7f1; }
+    .note { margin:16px 2px 0; text-align:center; color:var(--muted); font-size:11px; line-height:1.6; }
+    .success { position:fixed; inset:0; z-index:5; display:none; place-items:center; padding:20px; background:rgba(4,53,49,.7); backdrop-filter:blur(4px); }
+    .success.show { display:grid; }
+    .success-card { position:relative; overflow:hidden; width:min(100%,390px); padding:30px 23px 24px; text-align:center; border-radius:30px; background:#fffef4; box-shadow:0 24px 80px rgba(0,0,0,.25); animation:pop .5s ease both; }
+    .success-card h2 { margin:8px 0 12px; color:var(--teal-dark); font-size:26px; line-height:1.22; }
+    .success-card p { margin:0; line-height:1.65; font-weight:800; }
+    .battery { position:relative; width:170px; height:74px; margin:0 auto 12px; padding:7px; border:6px solid var(--teal); border-radius:15px; }
+    .battery:after { content:""; position:absolute; right:-17px; top:20px; width:11px; height:23px; border-radius:0 6px 6px 0; background:var(--teal); }
+    .battery span { display:block; width:100%; height:100%; border-radius:5px; background:linear-gradient(90deg,#ffe16b,#40d294); animation:charge 1.4s ease both; transform-origin:left; }
+    .bolt { position:absolute; top:-24px; right:-4px; font-size:44px; animation:bob 1s ease-in-out infinite alternate; }
+    .confetti { position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 10% 20%,#ffae63 0 4px,transparent 5px),radial-gradient(circle at 88% 12%,#39bea0 0 5px,transparent 6px),radial-gradient(circle at 20% 90%,#ffd35a 0 5px,transparent 6px),radial-gradient(circle at 80% 78%,#f27a6d 0 4px,transparent 5px); animation:float 2s ease-in-out infinite alternate; }
+    .close-success { margin-top:18px; padding:11px 18px; border:0; border-radius:12px; color:white; background:var(--teal); font-weight:900; }
+    @keyframes pop { from{transform:scale(.82);opacity:0} to{transform:scale(1);opacity:1} } @keyframes charge { from{transform:scaleX(.1)} to{transform:scaleX(1)} } @keyframes bob { to{transform:translateY(7px) rotate(8deg)} } @keyframes float { to{transform:translateY(-7px) rotate(4deg)} }
+    @media (max-width:390px) { .app{padding:11px 10px 24px}.hero{padding:20px 17px}.card{padding:14px}.board{gap:3px}.cell{border-radius:6px}.entry{display:block}.entry label{display:block;margin-bottom:6px} }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div class="brand">🔋 미래를 충전하는 학과</div>
+      <h1>대전도시과학고<br>전기배터리과<br>가로세로 낱말퀴즈</h1>
+      <p class="intro">문제를 읽고 알맞은 낱말을 입력해 보세요!<br>모두 맞히면 인형뽑기에 도전할 수 있습니다.</p>
+      <div class="status"><span id="scoreText">0 / 6 문제 해결</span><span id="percentText">0%</span></div>
+      <div class="progress"><span id="progressBar"></span></div>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title"><span>⚡</span> 퍼즐을 완성해 보세요</h2>
+      <div class="board-wrap"><div id="board" class="board" aria-label="가로세로 낱말퀴즈 퍼즐판"></div></div>
+      <p class="helper">문제나 칸을 누른 뒤, 띄어쓰기 없이 한글로 입력해 주세요.</p>
+      <div class="entry"><label id="selectedLabel" for="answerInput">가로 1번을 선택했어요</label><input id="answerInput" inputmode="text" autocomplete="off" spellcheck="false" placeholder="답을 입력하세요" aria-label="선택한 문제의 답"></div>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title"><span>🔌</span> 문제 목록</h2>
+      <div class="clues">
+        <div class="clue-group"><h3>가로 문제</h3><div id="acrossClues"></div></div>
+        <div class="clue-group"><h3>세로 문제</h3><div id="downClues"></div></div>
+      </div>
+      <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+      <div class="actions"><button id="checkBtn" type="button">✅ 정답 확인</button><button id="resetBtn" type="button">🔄 다시 풀기</button></div>
+      <p class="note">정답은 한 글자씩 퍼즐판에 자동으로 채워져요.<br>교차하는 칸은 두 문제에 함께 반영됩니다.</p>
+    </section>
+  </main>
+
+  <div id="success" class="success" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+    <div class="success-card"><div class="confetti"></div><div class="battery"><span></span><b class="bolt">⚡</b></div><h2 id="successTitle">축하합니다!<br>전기배터리과 가로세로<br>낱말퀴즈 성공!</h2><p>이 화면을 선생님께 보여주고<br>인형뽑기에 도전하세요!</p><button class="close-success" id="closeSuccess" type="button">확인했어요</button></div>
+  </div>
+  <script>
+    const clues = [
+      {id:'A1', dir:'across', no:1, row:2, col:2, answer:'도시', text:'사람들이 많이 모여 사는 큰 지역은?'},
+      {id:'A2', dir:'across', no:2, row:1, col:2, answer:'전기배터리과', text:'전기와 배터리에 대해 배우는 우리 학교 학과 이름은?'},
+      {id:'A3', dir:'across', no:3, row:5, col:1, answer:'입학', text:'학교에 들어가는 것은?'},
+      {id:'D1', dir:'down', no:1, row:0, col:2, answer:'대전도시과학고', text:'전기배터리과가 있는 우리 학교 이름은?'},
+      {id:'D2', dir:'down', no:2, row:0, col:2, answer:'충전', text:'배터리에 전기를 다시 채우는 것은?'},
+      {id:'D3', dir:'down', no:3, row:0, col:5, answer:'모터', text:'전기의 힘으로 돌아가 기계를 움직이는 장치는?'}
+    ];
+    const size=8, cells=new Map(), answers={}; let selected='A1';
+    clues.forEach(c=>{ answers[c.id]=Array(c.answer.length).fill(''); for(let i=0;i<c.answer.length;i++){ const r=c.row+(c.dir==='down'?i:0), col=c.col+(c.dir==='across'?i:0), key=`${r}-${col}`; if(!cells.has(key)) cells.set(key,{row:r,col,letters:'',clues:[]}); cells.get(key).clues.push({id:c.id,index:i}); }});
+    const board=document.querySelector('#board'), clueEls=new Map();
+    function clueById(id){return clues.find(c=>c.id===id)}
+    function renderBoard(){ board.innerHTML=''; for(let r=0;r<size;r++) for(let col=0;col<size;col++){ const key=`${r}-${col}`, data=cells.get(key), el=document.createElement('div'); el.className='cell'+(data?'':' blank'); el.dataset.key=key; if(data){ el.innerHTML='<span class="num"></span><span class="letter"></span>'; const first=data.clues[0]; if(first.index===0) el.querySelector('.num').textContent=clueById(first.id).no; el.addEventListener('click',()=>selectClue(data.clues.find(x=>x.id===selected)||data.clues[0].id)); } board.appendChild(el); } }
+    function renderClues(){ ['across','down'].forEach(dir=>{ const box=document.querySelector(dir==='across'?'#acrossClues':'#downClues'); box.innerHTML=''; clues.filter(c=>c.dir===dir).forEach(c=>{ const b=document.createElement('button'); b.type='button'; b.className='clue'; b.innerHTML=`<span class="clue-num">${c.no}</span><span class="clue-text">${c.text}</span>`; b.addEventListener('click',()=>selectClue(c.id)); box.appendChild(b); clueEls.set(c.id,b); }); }); }
+    function selectClue(id){ selected=id; const c=clueById(id); document.querySelector('#selectedLabel').textContent=`${c.dir==='across'?'가로':'세로'} ${c.no}번을 선택했어요`; const input=document.querySelector('#answerInput'); input.value=answers[id].join(''); input.maxLength=c.answer.length; document.querySelectorAll('.clue').forEach(x=>x.classList.remove('selected')); clueEls.get(id).classList.add('selected'); updateBoard(); input.focus(); }
+    function updateBoard(){ document.querySelectorAll('.cell').forEach(el=>{ const data=cells.get(el.dataset.key); if(!data)return; const vals=data.clues.map(x=>answers[x.id][x.index]).filter(Boolean); el.querySelector('.letter').textContent=vals[0]||''; el.classList.toggle('active',data.clues.some(x=>x.id===selected)); const states=data.clues.map(x=>clueEls.get(x.id)?.classList).filter(Boolean); el.classList.toggle('correct',states.some(s=>s.contains('done'))); el.classList.toggle('wrong',states.some(s=>s.contains('bad'))); }); }
+    function setAnswer(value){ const c=clueById(selected), chars=[...value.replace(/\s/g,'')].slice(0,c.answer.length); for(let i=0;i<c.answer.length;i++){ const r=c.row+(c.dir==='down'?i:0), col=c.col+(c.dir==='across'?i:0), data=cells.get(`${r}-${col}`); data.clues.forEach(x=>answers[x.id][x.index]=chars[i]||''); } updateBoard(); }
+    function check(){ let done=0; clues.forEach(c=>{ const right=answers[c.id].join('')===c.answer; clueEls.get(c.id).classList.toggle('done',right); clueEls.get(c.id).classList.toggle('bad',!right && answers[c.id].some(Boolean)); if(right)done++; }); const pct=Math.round(done/6*100); document.querySelector('#scoreText').textContent=`${done} / 6 문제 해결`; document.querySelector('#percentText').textContent=`${pct}%`; document.querySelector('#progressBar').style.width=pct+'%'; updateBoard(); const fb=document.querySelector('#feedback'); if(done===6){ fb.textContent='완벽해요! 모두 정답입니다!'; document.querySelector('#success').classList.add('show'); } else if(done>0){ fb.textContent='좋아요! 조금만 더 생각해 보세요!'; } else { fb.textContent='입력한 답을 다시 확인해 보세요. 화이팅!'; } }
+    function reset(){ clues.forEach(c=>{answers[c.id]=Array(c.answer.length).fill(''); clueEls.get(c.id).classList.remove('done','bad');}); document.querySelector('#feedback').textContent=''; document.querySelector('#success').classList.remove('show'); document.querySelector('#progressBar').style.width='0%'; document.querySelector('#scoreText').textContent='0 / 6 문제 해결'; document.querySelector('#percentText').textContent='0%'; selectClue('A1'); }
+    document.querySelector('#answerInput').addEventListener('input',e=>setAnswer(e.target.value)); document.querySelector('#checkBtn').addEventListener('click',check); document.querySelector('#resetBtn').addEventListener('click',reset); document.querySelector('#closeSuccess').addEventListener('click',()=>document.querySelector('#success').classList.remove('show'));
+    renderBoard(); renderClues(); selectClue('A1');
+  </script>
+</body>
+</html>
