@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0d8b73" />
-  <title>대전도시과학고 전기배터리과 가로세로 낱말퀴즈</title>
+  <title>대전도시과학고 전기배터리과</title>
   <style>
     :root { --ink:#173b4a; --muted:#66808a; --mint:#dff8ef; --teal:#0d8b73; --teal-dark:#086653; --yellow:#ffd35a; --orange:#ff8d55; --red:#e96757; --green:#17a673; --paper:#fffef8; --shadow:0 16px 38px rgba(20,82,77,.13); }
     * { box-sizing:border-box; }
@@ -14,7 +14,7 @@
     .hero { position:relative; overflow:hidden; color:white; border-radius:28px; padding:19px 20px 18px; background:linear-gradient(135deg,#087d6b,#15a27b); box-shadow:var(--shadow); }
     .hero:after { content:"⚡"; position:absolute; right:20px; top:5px; font-size:78px; opacity:.18; transform:rotate(10deg); }
     .brand { display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.18); font-weight:800; font-size:12px; }
-    h1 { margin:10px 0 8px; font-size:clamp(22px,6.2vw,34px); line-height:1.12; letter-spacing:-.06em; }
+    h1 { margin:10px 0 8px; font-size:clamp(17px,5.2vw,29px); line-height:1.12; letter-spacing:-.08em; white-space:nowrap; }
     .intro { margin:0; font-size:13px; line-height:1.55; font-weight:700; color:#ecfff8; }
     .status { display:flex; justify-content:space-between; align-items:center; gap:10px; margin:13px 2px 0; font-size:13px; font-weight:800; }
     .progress { height:9px; margin-top:7px; overflow:hidden; border-radius:99px; background:rgba(255,255,255,.28); }
@@ -69,7 +69,7 @@
   <main class="app">
     <section class="hero">
       <div class="brand">🔋 미래를 충전하는 학과</div>
-      <h1>대전도시과학고<br>전기배터리과<br>가로세로 낱말퀴즈</h1>
+      <h1>대전도시과학고 전기배터리과</h1>
       <p class="intro">문제를 읽고 알맞은 낱말을 입력해 보세요!<br>모두 맞히면 인형뽑기에 도전할 수 있습니다.</p>
       <div class="status"><span id="scoreText">0 / 6 문제 해결</span><span id="percentText">0%</span></div>
       <div class="progress"><span id="progressBar"></span></div>
@@ -96,7 +96,7 @@
   </main>
 
   <div id="success" class="success" role="dialog" aria-modal="true" aria-labelledby="successTitle">
-    <div class="success-card"><div class="confetti"></div><div class="battery"><span></span><b class="bolt">⚡</b></div><h2 id="successTitle">축하합니다!<br>전기배터리과 가로세로<br>낱말퀴즈 성공!</h2><p>이 화면을 선생님께 보여주고<br>인형뽑기에 도전하세요!</p><button class="close-success" id="closeSuccess" type="button">확인했어요</button></div>
+    <div class="success-card"><div class="confetti"></div><div class="battery"><span></span><b class="bolt">⚡</b></div><h2 id="successTitle">축하합니다!<br>전기배터리과 퀴즈 성공!</h2><p>이 화면을 선생님께 보여주고<br>인형뽑기에 도전하세요!</p><button class="close-success" id="closeSuccess" type="button">확인했어요</button></div>
   </div>
   <script>
     const clues = [
