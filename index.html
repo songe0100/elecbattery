@@ -11,11 +11,11 @@
     body { margin:0; color:var(--ink); font-family:ui-rounded,"Noto Sans KR",system-ui,-apple-system,sans-serif; background:linear-gradient(145deg,#e8fbf5 0%,#fff9df 52%,#e5f5ff 100%); min-height:100vh; }
     button,input { font:inherit; }
     .app { width:min(100%,720px); margin:auto; padding:18px 15px 32px; }
-    .hero { position:relative; overflow:hidden; color:white; border-radius:28px; padding:24px 22px 22px; background:linear-gradient(135deg,#087d6b,#15a27b); box-shadow:var(--shadow); }
+    .hero { position:relative; overflow:hidden; color:white; border-radius:28px; padding:19px 20px 18px; background:linear-gradient(135deg,#087d6b,#15a27b); box-shadow:var(--shadow); }
     .hero:after { content:"⚡"; position:absolute; right:20px; top:5px; font-size:78px; opacity:.18; transform:rotate(10deg); }
     .brand { display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.18); font-weight:800; font-size:12px; }
-    h1 { margin:15px 0 10px; font-size:clamp(27px,8vw,46px); line-height:1.12; letter-spacing:-.07em; }
-    .intro { margin:0; font-size:14px; line-height:1.65; font-weight:700; color:#ecfff8; }
+    h1 { margin:10px 0 8px; font-size:clamp(22px,6.2vw,34px); line-height:1.12; letter-spacing:-.06em; }
+    .intro { margin:0; font-size:13px; line-height:1.55; font-weight:700; color:#ecfff8; }
     .status { display:flex; justify-content:space-between; align-items:center; gap:10px; margin:13px 2px 0; font-size:13px; font-weight:800; }
     .progress { height:9px; margin-top:7px; overflow:hidden; border-radius:99px; background:rgba(255,255,255,.28); }
     .progress span { display:block; width:0; height:100%; border-radius:99px; background:var(--yellow); transition:width .35s ease; }
@@ -62,7 +62,7 @@
     .confetti { position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 10% 20%,#ffae63 0 4px,transparent 5px),radial-gradient(circle at 88% 12%,#39bea0 0 5px,transparent 6px),radial-gradient(circle at 20% 90%,#ffd35a 0 5px,transparent 6px),radial-gradient(circle at 80% 78%,#f27a6d 0 4px,transparent 5px); animation:float 2s ease-in-out infinite alternate; }
     .close-success { margin-top:18px; padding:11px 18px; border:0; border-radius:12px; color:white; background:var(--teal); font-weight:900; }
     @keyframes pop { from{transform:scale(.82);opacity:0} to{transform:scale(1);opacity:1} } @keyframes charge { from{transform:scaleX(.1)} to{transform:scaleX(1)} } @keyframes bob { to{transform:translateY(7px) rotate(8deg)} } @keyframes float { to{transform:translateY(-7px) rotate(4deg)} }
-    @media (max-width:390px) { .app{padding:11px 10px 24px}.hero{padding:20px 17px}.card{padding:14px}.board{gap:3px}.cell{border-radius:6px}.entry{display:block}.entry label{display:block;margin-bottom:6px} }
+    @media (max-width:390px) { .app{padding:11px 10px 24px}.hero{padding:17px 17px 16px}.card{padding:14px}.board{gap:3px}.cell{border-radius:6px}.entry{display:block}.entry label{display:block;margin-bottom:6px} }
   </style>
 </head>
 <body>
