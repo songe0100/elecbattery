@@ -23,7 +23,7 @@
     .card-title { display:flex; align-items:center; gap:8px; margin:0 0 13px; font-size:17px; }
     .card-title span { display:grid; place-items:center; width:29px; height:29px; border-radius:10px; background:var(--yellow); }
     .board-wrap { display:flex; justify-content:center; padding:3px 0 5px; }
-    .board { display:grid; grid-template-columns:repeat(8, minmax(30px, 45px)); grid-template-rows:repeat(8, minmax(30px, 45px)); gap:4px; }
+    .board { display:grid; grid-template-columns:repeat(7, minmax(30px, 45px)); grid-template-rows:repeat(7, minmax(30px, 45px)); gap:4px; }
     .cell { position:relative; display:grid; place-items:center; border:2px solid #acd7cb; border-radius:8px; background:#f9fffc; color:var(--ink); font-size:clamp(18px,6vw,28px); font-weight:900; cursor:pointer; user-select:none; transition:.18s; }
     .cell.blank { border:0; background:transparent; cursor:default; }
     .cell.active { border-color:var(--orange); background:#fff3ce; transform:scale(1.05); z-index:1; }
@@ -98,14 +98,14 @@
   </div>
   <script>
     const clues = [
-      {id:'A1', dir:'across', no:1, row:2, col:2, answer:'도시', text:'사람들이 많이 모여 사는 큰 지역은?'},
-      {id:'A2', dir:'across', no:2, row:1, col:2, answer:'전기배터리과', text:'전기와 배터리에 대해 배우는 우리 학교 학과 이름은?'},
-      {id:'A3', dir:'across', no:3, row:5, col:1, answer:'입학', text:'학교에 들어가는 것은?'},
-      {id:'D1', dir:'down', no:1, row:0, col:2, answer:'대전도시과학고', text:'전기배터리과가 있는 우리 학교 이름은?'},
-      {id:'D2', dir:'down', no:2, row:3, col:7, answer:'충전', text:'배터리에 전기를 다시 채우는 것은?'},
-      {id:'D3', dir:'down', no:3, row:0, col:5, answer:'모터', text:'전기의 힘으로 돌아가 기계를 움직이는 장치는?'}
+      {id:'A1', dir:'across', no:1, row:2, col:5, answer:'도시', text:'사람들이 많이 모여 사는 큰 지역은?'},
+      {id:'A2', dir:'across', no:2, row:4, col:0, answer:'전기배터리과', text:'전기와 배터리에 대해 배우는 우리 학교 학과 이름은?'},
+      {id:'A3', dir:'across', no:3, row:5, col:4, answer:'입학', text:'학교에 들어가는 것은?'},
+      {id:'D1', dir:'down', no:1, row:0, col:5, answer:'대전도시과학고', text:'전기배터리과가 있는 우리 학교 이름은?'},
+      {id:'D2', dir:'down', no:2, row:3, col:0, answer:'충전', text:'배터리에 전기를 다시 채우는 것은?'},
+      {id:'D3', dir:'down', no:3, row:3, col:3, answer:'모터', text:'전기의 힘으로 돌아가 기계를 움직이는 장치는?'}
     ];
-    const size=8, cells=new Map(), answers={}; let selected='A1';
+    const size=7, cells=new Map(), answers={}; let selected='A1';
     clues.forEach(c=>{ answers[c.id]=Array(c.answer.length).fill(''); for(let i=0;i<c.answer.length;i++){ const r=c.row+(c.dir==='down'?i:0), col=c.col+(c.dir==='across'?i:0), key=`${r}-${col}`; if(!cells.has(key)) cells.set(key,{row:r,col,letters:'',clues:[]}); cells.get(key).clues.push({id:c.id,index:i}); }});
     const board=document.querySelector('#board'), clueEls=new Map();
     function clueById(id){return clues.find(c=>c.id===id)}
