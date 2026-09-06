@@ -31,8 +31,8 @@
     .cell.wrong { border-color:#f29b76; background:#fff0e8; }
     .num { position:absolute; top:1px; left:3px; font-size:9px; line-height:1; color:var(--teal-dark); }
     .helper { margin:10px 0 0; text-align:center; color:var(--muted); font-size:12px; font-weight:700; }
-    .entry { display:flex; gap:8px; align-items:center; margin-top:14px; }
-    .entry label { flex:1; min-width:0; color:var(--teal-dark); font-size:13px; font-weight:900; }
+    .entry { display:grid; grid-template-columns:auto minmax(0,1fr); gap:8px; align-items:center; margin-top:14px; }
+    .entry label { white-space:nowrap; color:var(--teal-dark); font-size:13px; font-weight:900; }
     #answerInput { width:100%; min-width:0; padding:12px 13px; border:2px solid #cce8df; border-radius:14px; outline:0; color:var(--ink); background:#fbfffd; font-weight:800; }
     #answerInput:focus { border-color:var(--teal); box-shadow:0 0 0 4px rgba(13,139,115,.11); }
     .clues { display:grid; gap:10px; }
